@@ -3,6 +3,9 @@ FROM node:18-alpine
 # 设置工作目录
 WORKDIR /app
 
+# 使用阿里云镜像源
+RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories
+
 # 安装全局依赖
 RUN apk add --no-cache build-base gcc autoconf automake zlib-dev libpng-dev vips-dev python3 g++ make libtool
 
