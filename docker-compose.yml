@@ -1,0 +1,52 @@
+version: '3'
+
+services:
+  strapi:
+    container_name: glass-enterprise-strapi
+    build: .
+    image: glass-enterprise-strapi:latest
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      DATABASE_CLIENT: ${DATABASE_CLIENT:-postgres}
+      DATABASE_HOST: ${DATABASE_HOST:-postgres}
+      DATABASE_PORT: ${DATABASE_PORT:-5432}
+      DATABASE_NAME: ${DATABASE_NAME:-strapi}
+      DATABASE_USERNAME: ${DATABASE_USERNAME:-strapi}
+      DATABASE_PASSWORD: ${DATABASE_PASSWORD:-strapi}
+      NODE_ENV: ${NODE_ENV:-production}
+      ADMIN_JWT_SECRET: ${ADMIN_JWT_SECRET}
+      API_TOKEN_SALT: ${API_TOKEN_SALT}
+      APP_KEYS: ${APP_KEYS}
+      JWT_SECRET: ${JWT_SECRET}
+    volumes:
+      - ./public/uploads:/app/public/uploads
+    ports:
+      - '${PORT:-1337}:1337'
+    networks:
+      - strapi-network
+    depends_on:
+      - postgres
+
+  postgres:
+    container_name: glass-enterprise-postgres
+    image: postgres:16-alpine
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      POSTGRES_DB: ${DATABASE_NAME:-strapi}
+      POSTGRES_USER: ${DATABASE_USERNAME:-strapi}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD:-strapi}
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    ports:
+      - '${DATABASE_PORT:-5432}:5432'
+    networks:
+      - strapi-network
+
+networks:
+  strapi-network:
+    driver: bridge
+
+volumes:
+  postgres-data:
