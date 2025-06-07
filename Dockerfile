@@ -12,6 +12,9 @@ RUN apk add --no-cache build-base gcc autoconf automake zlib-dev libpng-dev vips
 # 安装 bun (因为项目使用 bun.lock)
 RUN npm install -g bun
 
+# 设置环境变量以禁用耗时的 postinstall 脚本
+ENV DISABLE_POSTINSTALL=1
+
 # 复制 package.json, bun.lock 和 其他配置文件
 COPY package.json bun.lock* ./
 COPY tsconfig.json ./
