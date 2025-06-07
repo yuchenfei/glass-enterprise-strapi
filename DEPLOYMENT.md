@@ -34,6 +34,7 @@ APP_KEYS=$(openssl rand -base64 32),$(openssl rand -base64 32)
 API_TOKEN_SALT=$(openssl rand -base64 32)
 ADMIN_JWT_SECRET=$(openssl rand -base64 32)
 JWT_SECRET=$(openssl rand -base64 32)
+TRANSFER_TOKEN_SALT=$(openssl rand -base64 32)
 DATABASE_PASSWORD=$(openssl rand -base64 16)
 
 # 将生成的密钥替换到 .env 文件中
@@ -41,6 +42,7 @@ sed -i "s/APP_KEYS=.*/APP_KEYS=$APP_KEYS/" .env
 sed -i "s/API_TOKEN_SALT=.*/API_TOKEN_SALT=$API_TOKEN_SALT/" .env
 sed -i "s/ADMIN_JWT_SECRET=.*/ADMIN_JWT_SECRET=$ADMIN_JWT_SECRET/" .env
 sed -i "s/JWT_SECRET=.*/JWT_SECRET=$JWT_SECRET/" .env
+sed -i "s/TRANSFER_TOKEN_SALT=.*/TRANSFER_TOKEN_SALT=$TRANSFER_TOKEN_SALT/" .env
 sed -i "s/DATABASE_PASSWORD=.*/DATABASE_PASSWORD=$DATABASE_PASSWORD/" .env
 
 # 如果是在 macOS 上执行，需要使用不同的 sed 命令
@@ -48,6 +50,7 @@ sed -i "s/DATABASE_PASSWORD=.*/DATABASE_PASSWORD=$DATABASE_PASSWORD/" .env
 # sed -i '' "s/API_TOKEN_SALT=.*/API_TOKEN_SALT=$API_TOKEN_SALT/" .env
 # sed -i '' "s/ADMIN_JWT_SECRET=.*/ADMIN_JWT_SECRET=$ADMIN_JWT_SECRET/" .env
 # sed -i '' "s/JWT_SECRET=.*/JWT_SECRET=$JWT_SECRET/" .env
+# sed -i '' "s/TRANSFER_TOKEN_SALT=.*/TRANSFER_TOKEN_SALT=$TRANSFER_TOKEN_SALT/" .env
 # sed -i '' "s/DATABASE_PASSWORD=.*/DATABASE_PASSWORD=$DATABASE_PASSWORD/" .env
 ```
 
